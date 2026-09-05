@@ -10,6 +10,6 @@ export function TimelineItem({ item }: { item: ExperienceItemType }) {
     </div>
     <p className="mt-6 max-w-2xl text-base leading-7 text-muted">{item.summary}</p>
     <ul className="mt-6 max-w-3xl space-y-3 text-sm leading-6 text-muted">{item.highlights.map((highlight) => <li key={highlight} className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 bg-accent" aria-hidden="true" />{highlight}</li>)}</ul>
-    <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 font-mono text-[.625rem] uppercase tracking-[.1em] text-black/45">{item.technologies.map((technology) => <span key={technology}>{technology}</span>)}</div>
+    <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 font-mono text-[.625rem] uppercase tracking-[.1em] text-foreground/45">{item.technologies.map((technology) => <span key={technology}>{technology}</span>)}</div>
   </Reveal>;
 }

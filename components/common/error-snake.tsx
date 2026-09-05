@@ -7,6 +7,13 @@ type Point = { x: number; y: number };
 type Direction = Point;
 
 const GRID_SIZE = 16;
+const CANVAS_COLORS = {
+  background: "#fafaf9",
+  foreground: "#1c1917",
+  border: "rgba(28, 25, 23, 0.08)",
+  accent: "#c2410c",
+  clay: "#d97757"
+} as const;
 const STARTING_SNAKE: Point[] = [{ x: 7, y: 8 }, { x: 6, y: 8 }, { x: 5, y: 8 }];
 const DIRECTIONS: Record<string, Direction> = {
   ArrowUp: { x: 0, y: -1 },
@@ -51,9 +58,9 @@ export function ErrorSnake() {
     const cellSize = canvas.width / GRID_SIZE;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "#f3ebdd";
+    context.fillStyle = CANVAS_COLORS.background;
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.strokeStyle = "rgba(26, 26, 26, 0.08)";
+    context.strokeStyle = CANVAS_COLORS.border;
     context.lineWidth = 1;
     for (let index = 1; index < GRID_SIZE; index += 1) {
       context.beginPath();
@@ -64,10 +71,10 @@ export function ErrorSnake() {
       context.stroke();
     }
 
-    context.fillStyle = "#ff8c42";
+    context.fillStyle = CANVAS_COLORS.accent;
     context.fillRect(foodRef.current.x * cellSize + 3, foodRef.current.y * cellSize + 3, cellSize - 6, cellSize - 6);
     snakeRef.current.forEach((point, index) => {
-      context.fillStyle = index === 0 ? "#1a1a1a" : "#d85d1e";
+      context.fillStyle = index === 0 ? CANVAS_COLORS.foreground : CANVAS_COLORS.clay;
       context.fillRect(point.x * cellSize + 2, point.y * cellSize + 2, cellSize - 4, cellSize - 4);
     });
   }, []);
@@ -142,8 +149,8 @@ export function ErrorSnake() {
 
   return <div className="border-t border-border pt-5" aria-label={siteContent.recovery.snake.ariaLabel}>
     <div className="flex items-end justify-between gap-4">
-      <div><p className="font-mono text-[.625rem] uppercase tracking-[.15em] text-black/45">{siteContent.recovery.snake.protocol}</p><p className="mt-2 text-lg font-semibold tracking-[-.03em]">{siteContent.recovery.snake.heading}</p></div>
-      <div className="text-right font-mono text-[.625rem] uppercase tracking-[.12em] text-black/45"><span className="text-accent">{score}</span> score · <span className="text-foreground">{highScore}</span> best</div>
+      <div><p className="font-mono text-[.625rem] uppercase tracking-[.15em] text-foreground/45">{siteContent.recovery.snake.protocol}</p><p className="mt-2 text-lg font-semibold tracking-[-.03em]">{siteContent.recovery.snake.heading}</p></div>
+      <div className="text-right font-mono text-[.625rem] uppercase tracking-[.12em] text-foreground/45"><span className="text-accent">{score}</span> score · <span className="text-foreground">{highScore}</span> best</div>
     </div>
     <div className="mt-4 overflow-hidden border border-border bg-surface"><canvas ref={canvasRef} width={320} height={320} className="block h-auto w-full" aria-label={`${siteContent.recovery.snake.heading} Score ${score}. Use arrow keys or WASD to move.`} /></div>
     <div className="mt-3 grid grid-cols-3 gap-2 sm:hidden" aria-label="Snake touch controls">
@@ -154,6 +161,6 @@ export function ErrorSnake() {
       <button type="button" onClick={() => changeDirection(DIRECTIONS.ArrowDown)} className="border border-border py-2 font-mono text-xs" aria-label="Move down">↓</button>
       <button type="button" onClick={() => changeDirection(DIRECTIONS.ArrowRight)} className="border border-border py-2 font-mono text-xs" aria-label="Move right">→</button>
     </div>
-    <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><p className="font-mono text-[.625rem] uppercase tracking-[.12em] text-black/45">{siteContent.recovery.snake.controls}</p><button type="button" onClick={restart} className="border border-foreground px-3 py-2 text-xs font-semibold transition-colors hover:bg-foreground hover:text-white">{gameOver ? siteContent.recovery.snake.tryAgain : siteContent.recovery.snake.restart}</button></div>
+    <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><p className="font-mono text-[.625rem] uppercase tracking-[.12em] text-foreground/45">{siteContent.recovery.snake.controls}</p><button type="button" onClick={restart} className="border border-foreground px-3 py-2 text-xs font-semibold transition-colors hover:bg-foreground hover:text-background">{gameOver ? siteContent.recovery.snake.tryAgain : siteContent.recovery.snake.restart}</button></div>
   </div>;
 }
